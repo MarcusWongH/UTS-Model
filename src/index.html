@@ -1,17 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Vanilla JavaScript App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniMate Chatbot</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-  <main>
-    <h1>Vanilla JavaScript App</h1>
-  </main>
-</body>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box">
+            <div class="chat-message bot-message" style="white-space: normal;">
+                <h2>Welcome to UniMate! Feel free to ask me anything about the following topics:</h2>
+                <ul>
+                    <li><b>About UTS: </b>Its vision, mission, core values, and commitment to providing affordable, world-class education.</li>
+                    <li><b>Campus Facilities:</b> Explore the campus virtually, learn about classrooms, labs, libraries, and the proposed Technology and Science Park.</li>
+                    <li><b>Management Team:</b> Meet the organisation team of UTS, including the Vice Chancellor, Deans, and Directors.</li>
+                    <li><b>Academic Calendar:</b> Find important dates for foundation and undergraduate programs for the 2024/2025 sessions.</li>
+                    <li><b>Programs Offered:</b> Discover the diverse range of foundation, undergraduate, and postgraduate programs available at UTS.</li>
+                    <li><b>Tuition Fees:</b> Learn about tuition fees for local students, including bursary schemes for Sarawakian students.</li>
+                    <li><b>Registration Documents:</b> Find and download necessary documents for registration.</li>
+                  </ul>
+            </div>
+            <div class="user-input-container">
+                <input type="text" id="user-input" placeholder="Type your message...">
+                <button id="send-button" onclick="sendMessage()">Send</button>
+                <button class="button-history" onclick="showChatHistory()">Chat History</button>
+            </div>
+        </div>
+        <select id="colorSelector">
+            <option value="rgba(240, 240, 240, 0.9)">Light Gray</option>
+            <option value="rgba(230, 247, 255, 0.9)">Light Blue</option>
+            <option value="rgba(255, 217, 102, 0.9)">Light Orange</option>
+            <option value="rgba(204, 255, 204, 0.9)">Light Green</option>
+            <option value="rgba(230, 204, 255, 0.9)">Light Purple</option>
+        </select>
+    </div>
+    <div id="chatHistoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeChatHistory()">&times;</span>
+            <div id="chatHistory"></div>
+        </div>
+    </div>
+    <script src="chat.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var selectedColor = document.getElementById("colorSelector").value;
+            var chatBox = document.querySelector(".chat-box");
+            chatBox.style.backgroundColor = selectedColor;
 
+            document.getElementById("colorSelector").addEventListener("change", function() {
+                selectedColor = this.value;
+                chatBox.style.backgroundColor = selectedColor;
+            });
+        });
+        
+        function showChatHistory() {
+            var modal = document.getElementById("chatHistoryModal");
+            modal.style.display = "block";
+        }
+
+        function closeChatHistory() {
+            var modal = document.getElementById("chatHistoryModal");
+            modal.style.display = "none";
+        }
+		
+		function displayChatHistory() {
+			var chatHistory = [
+				{ type: 'bot', message: 'Feature Coming Soon!' },
+			];
+
+		var chatHistoryContainer = document.getElementById("chatHistory");
+		chatHistoryContainer.innerHTML = "";
+		chatHistory.forEach(function(entry) {
+			var messageElement = document.createElement("div");
+			messageElement.className = "chat-message " + entry.type + "-message";
+			messageElement.innerHTML = "<p>" + entry.message + "</p>";
+			chatHistoryContainer.appendChild(messageElement);
+		});
+		}
+
+		document.addEventListener("DOMContentLoaded", function() {
+			displayChatHistory();
+		});
+    </script>
+</body>
 </html>
